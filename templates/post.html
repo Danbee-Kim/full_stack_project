@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flasent - {{ doc[id|int].name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/post.css">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script>
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그인페이지로 돌아갑니다')
+            window.location.href = "/login"
+        }
+
+        function save_comment() {
+            let comment = $('#comment').val()
+            let flowerId = {{ doc[id|int].id }}
+
+            if(comment.length < 3) {
+                alert('댓글을 2자 이상 입력해주세요')
+                $('#comment').focus()
+            } else {
+                $.ajax({
+                type: "POST",
+                url: "/comments",
+                data: {comment_give: comment, id_give: flowerId},
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            })
+        }
+    }
+
+        function backToTop() {
+          $('html').scrollTop(0);
+        }
+
+        window.addEventListener('scroll', function (){
+            if ($(this).scrollTop() > 150) {
+                $('#btn-back-to-top').show();
+            } else {
+                $('#btn-back-to-top').hide();
+            };
+        })
+    </script>
+</head>
+
+<body>
+<div class="post-page">
+    <div class="container">
+        <div class="log-button__container">
+            <button class="btn btn-outline-secondary" onclick="sign_out()">로그아웃</button>
+        </div>
+    </div>
+    <header class="page-header">
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h1 class="flasent-logo" onclick="window.location = '/'"></h1>
+            </div>
+        </div>
+    </header>
+    <section class="container">
+        <div class="post-page__contents">
+            <div class="post-page__top">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ doc[id|int].img }}" alt="꽃 이미지">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title flower-name">꽃 이름</h5>
+                                <p class="card-text">{{ doc[id|int].name }} ({{ doc[id|int].e_name }})</p>
+                                <h5 class="card-title flower-name">꽃말</h5>
+                                <p class="card-text">{{ doc[id|int].flower_lang }}</p>
+                                <p class="card-text"><small class="text-muted">{{ doc[id|int].month }}에 피는 꽃</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="post-page__bottom">
+                <dl class="row">
+                    <dt class="col-sm-3">상세 설명</dt>
+                    <dd class="col-sm-9">
+                        <p>{{ doc[id|int].desc }}</p>
+                        <p>{{ doc[id|int].desc2 }}</p>
+                    </dd>
+
+                    <dt class="col-sm-3">사이즈</dt>
+                    <dd class="col-sm-9">{{ doc[id|int].size }}</dd>
+
+                    <dt class="col-sm-3">원산지</dt>
+                    <dd class="col-sm-9">{{ doc[id|int].origin }}</dd>
+
+                </dl>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="container">
+        <div class="mypost">
+            <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="comment"
+                      style="height: 100px" maxlength="60"></textarea>
+                <label for="floatingTextarea2">댓글</label>
+            </div>
+            <button onclick="save_comment()" type="button" class="btn btn-dark">댓글 남기기</button>
+        </div>
+        {% if doc[id|int].comment_list %}
+            {% for text in doc[id|int].comment_list|reverse %}
+                <div class="mycards" id="comment-list" >
+                    <div class="card">
+                        <div class="card-body">
+                            <blockquote class="blockquote mb-0">
+                                <p>{{ text.comment }}</p>
+                                <footer class="blockquote-footer">{{ text.user }}</footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </section>
+
+    <div class="post-page__buttton d-flex justify-content-center">
+        <button onclick="window.history.back()" class="btn btn-outline-secondary">뒤로가기</button>
+    </div>
+</div>
+<button
+        type="button"
+        class="btn btn-floating btn-lg"
+        id="btn-back-to-top"
+        onclick="backToTop()"
+        >
+</button>
+</body>
+</html>

@@ -1,0 +1,115 @@
+body {
+    background-color: blanchedalmond;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 20px;
+    padding-bottom: 50px;
+}
+
+ul {
+    padding: 0;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: deeppink;
+}
+
+header {
+    padding-top: 30px;
+}
+
+.log-button__container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.logo-background{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width:100%;
+    height: 300px;
+    background-image: url("../img/background.jpg");
+    background-position: center;
+    background-size: cover;
+
+}
+.logo-background > h1{
+    width: 100%;
+    height: 200px;
+    margin-bottom: 0;
+    background: url("../img/flasent-logo-white.png") no-repeat center;
+    cursor: pointer;
+}
+
+.log-button__container{
+    width: auto;
+    margin-right: 10px;
+}
+
+.flower-box{
+    margin: 20px auto 0;
+}
+
+.theme{
+    margin: 50px auto 0;
+    /*background-color: white;*/
+    height: 200px;
+    max-width: 70%;
+
+}
+
+.theme>ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme>ul>li{
+    list-style: none;
+    margin: 30px auto;
+    color: dimgrey;
+    cursor: pointer;
+}
+
+.theme>ul>li.active {
+    color: deeppink;
+}
+
+.theme>ul>li:hover {
+    color: deeppink;
+}
+
+.card> img{
+    height:350px;
+}
+
+.card-title {
+    text-align: center;
+}
+
+#btn-back-to-top {
+    position: fixed;
+    bottom: 50px;
+    right: 30px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../img/angle-up-solid.svg");
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 20px;
+    background-position: center;
+    box-shadow: none;
+    border: none;
+}
